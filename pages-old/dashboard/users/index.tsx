@@ -8,7 +8,6 @@ import DownloadIcon from "../../../public/svgs/download.svg";
 import { DownloadModal } from "../../../components/modals/download-modal";
 import { DateFilter } from "../../../components/filter/date-filter";
 import { options } from "../../../components/transaction-table";
-import { checkAuthStatus } from "../../../utils/check-auth";
 
 const Users = () => {
 	const [openDownload, setOpenDownload] = useState(false);
@@ -95,5 +94,3 @@ const Users = () => {
 };
 
 export default Users;
-
-export const getServerSideProps = checkAuthStatus(true);

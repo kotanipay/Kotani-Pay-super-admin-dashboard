@@ -7,7 +7,6 @@ import testProfile from "../../../public/images/test-profile.jpg";
 import Image from "next/image";
 import { TransactionTable } from "../../../components/transaction-table";
 import { EditProfile } from "../../../components/modals/edit-profile";
-import { checkAuthStatus } from "../../../utils/check-auth";
 
 export const Detail: React.FC<{ title: string; value: string }> = ({
 	title,
@@ -99,5 +98,3 @@ const UserDetails = () => {
 };
 
 export default UserDetails;
-
-export const getServerSideProps = checkAuthStatus(true);

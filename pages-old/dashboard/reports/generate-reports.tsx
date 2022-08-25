@@ -7,7 +7,6 @@ import { Button } from "../../../components/button";
 import { DownloadTable } from "../../../components/download-table";
 import { CheckSelect } from "../../../components/filter/check-select";
 import { DateFilter } from "../../../components/filter/date-filter";
-import { checkAuthStatus } from "../../../utils/check-auth";
 
 const reports = [
 	{
@@ -88,5 +87,3 @@ const Generate = () => {
 };
 
 export default Generate;
-
-export const getServerSideProps = checkAuthStatus(true);

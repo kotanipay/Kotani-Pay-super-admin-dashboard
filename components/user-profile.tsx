@@ -7,8 +7,17 @@ import { Fragment } from "react";
 import Link from "next/link";
 import Logout from "../public/svgs/log-out.svg";
 import Settings from "../public/svgs/settings.svg";
+import { useApi } from "../utils/api";
+import { useRouter } from "next/router";
 
 export const UserProfile = () => {
+	const router = useRouter();
+	const { submit: logout } = useApi("/api/logout", {
+		onSuccess() {
+			router.push("/");
+		},
+	});
+
 	return (
 		<>
 			<div className=" flex ">
@@ -61,12 +70,12 @@ export const UserProfile = () => {
 										<div className="bg-[#B0B0B0] bg-opacity-20 h-[2px] w-full"></div>
 
 										<Menu.Item>
-											<Link href={""} onClick={() => {}}>
-												<a className="flex items-center space-x-2 px-3 pt-2">
-													<Logout />
-													<span>Log Out</span>
-												</a>
-											</Link>
+											<button
+												onClick={() => logout()}
+												className="flex items-center space-x-2 px-3 pt-2">
+												<Logout />
+												<span>Log Out</span>
+											</button>
 										</Menu.Item>
 									</Menu.Items>
 								</div>

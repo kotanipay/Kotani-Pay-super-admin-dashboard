@@ -10,7 +10,6 @@ import { DateFilter } from "../../../components/filter/date-filter";
 import { Layout } from "../../../components/layout";
 import { TransactionTable } from "../../../components/transaction-table";
 import { UserTable } from "../../../components/user-table";
-import { checkAuthStatus } from "../../../utils/check-auth";
 import { Spacer } from "../../../utils/spacer";
 
 const Reports = () => {
@@ -210,5 +209,3 @@ const Reports = () => {
 };
 
 export default Reports;
-
-export const getServerSideProps = checkAuthStatus(true);
