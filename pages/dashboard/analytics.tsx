@@ -10,6 +10,7 @@ import { Spacer } from "../../utils/spacer";
 import Verified from "../../public/svgs/verified.svg";
 import Unverified from "../../public/svgs/unverified.svg";
 import Total from "../../public/svgs/total.svg";
+import { checkAuthStatus } from "../../utils/check-auth";
 
 export const UserCard = () => {
 	return (
@@ -136,3 +137,5 @@ const Analytics = () => {
 };
 
 export default Analytics;
+
+export const getServerSideProps = checkAuthStatus(true);

@@ -3,6 +3,7 @@ import { Input } from "../../components/input";
 import { Layout } from "../../components/layout";
 import { Select } from "../../components/select";
 import { TransactionTable } from "../../components/transaction-table";
+import { checkAuthStatus } from "../../utils/check-auth";
 import { Spacer } from "../../utils/spacer";
 
 const Transactions = () => {
@@ -71,3 +72,5 @@ const Transactions = () => {
 };
 
 export default Transactions;
+
+export const getServerSideProps = checkAuthStatus(true);

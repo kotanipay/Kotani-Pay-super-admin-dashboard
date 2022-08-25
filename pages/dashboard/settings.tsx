@@ -5,6 +5,7 @@ import { Layout } from "../../components/layout";
 import { AccountInfo } from "../../components/settings/info";
 import { Team } from "../../components/settings/team";
 import { TabHeader } from "../../components/tab-header";
+import { checkAuthStatus } from "../../utils/check-auth";
 import { Spacer } from "../../utils/spacer";
 
 const Settings = () => {
@@ -60,3 +61,5 @@ const Settings = () => {
 };
 
 export default Settings;
+
+export const getServerSideProps = checkAuthStatus(true);

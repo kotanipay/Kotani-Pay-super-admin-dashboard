@@ -7,6 +7,11 @@ import classNames from "classnames";
 import { useState } from "react";
 import { Button } from "../components/button";
 import { AuthLayoutCard } from "../components/auth-layout-card";
+import PasswordValidator from "password-validator";
+import axios from "axios";
+import { useApi } from "../utils/api";
+import { useRouter } from "next/router";
+import { checkAuthStatus } from "../utils/check-auth";
 
 interface setPasswordIconProps {
 	open: boolean;
@@ -39,14 +44,32 @@ enum Steps {
 }
 
 const Home: NextPage = () => {
+	const router = useRouter();
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState<string>();
 	const [email, setEmail] = useState<string>("");
+	const [loginError, setLoginError] = useState("");
 	const [step, setStep] = useState<Steps>(Steps.SIGN_IN);
 	const [showPassword, setShowPassword] = useState(false);
 	const [passwordErr, setPasswordErr] = useState<string>();
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+	const { submit: login, isLoading } = useApi("/api/login", {
+		onSuccess() {
+			router.push("/dashboard");
+		},
+		onError() {
+			setLoginError("Invalid Credentials, Please try again");
+		},
+	});
+
+	function onSubmit() {
+		login({
+			phone: email,
+			password,
+		});
+	}
 
 	function isEmailValid(email: string) {
 		const emailRegexp = new RegExp(
@@ -56,13 +79,9 @@ const Home: NextPage = () => {
 		return emailRegexp.test(email);
 	}
 
-	function isValidPassword(password: string) {
-		const psswdRegexp = new RegExp(
-			"^(?=.*[A-Za-z])(?=.{8,})(?=.*?[#?!@$%^&*-_0-9])"
-		);
+	var schema = new PasswordValidator();
 
-		return psswdRegexp.test(password);
-	}
+	schema.is().has().digits(1).has().symbols();
 
 	return (
 		<AuthLayoutCard>
@@ -75,16 +94,13 @@ const Home: NextPage = () => {
 					<Spacer className="h-10" />
 
 					<Input
-						label="Email"
+						label="Phone Number"
 						largeLabel
-						placeholder="user@email.com"
+						placeholder="0719208393"
 						error={error}
 						value={email}
 						onChange={event => {
-							if (error) {
-								setError("");
-								return;
-							}
+							setError("");
 							setEmail(event.target.value);
 						}}
 					/>
@@ -101,9 +117,7 @@ const Home: NextPage = () => {
 							value={password}
 							type={showPassword ? "text" : "password"}
 							onChange={event => {
-								if (passwordErr) {
-									setPasswordErr(undefined);
-								}
+								setPasswordErr(undefined);
 								setPassword(event.target.value);
 							}}
 						/>
@@ -111,32 +125,45 @@ const Home: NextPage = () => {
 
 					<Spacer className="h-3" />
 
-					<div className="text-left w-full">
+					{/* <div className="text-left w-full">
 						<button
 							onClick={() => {}}
 							className="font-sans text-neutral-900 text-sm underline">
 							I forgot my password
 						</button>
-					</div>
+					</div> */}
 
 					<Spacer className="h-6" />
 
 					<Button
 						isFullWidth
+						loading={isLoading}
+						disabled={!email || !password || !!error || !!passwordErr}
 						onClick={() => {
-							if (!isEmailValid(email) && !!email) {
-								setError(ErrorType.EMAIL);
-							}
-							// if (!isValidPassword(password) && !!password) {
-							// 	setPasswordErr(ErrorType.PASSWORD);
+							// if (!isEmailValid(email) && !!email) {
+							// 	setError(ErrorType.EMAIL);
 							// }
+							if (!schema.validate(password) && !!password) {
+								setPasswordErr(ErrorType.PASSWORD);
+								return;
+							}
+
+							onSubmit();
 						}}>
 						Sign In
 					</Button>
 
 					<Spacer className="h-6" />
 
-					<div className="font-sans text-neutral-900 text-sm text-center">
+					{loginError ? (
+						<p className="text-center text-secondary-200 text-sm font-sans">
+							{loginError}
+						</p>
+					) : null}
+
+					<Spacer className="h-6" />
+
+					{/* <div className="font-sans text-neutral-900 text-sm text-center">
 						Don’t have an account?{" "}
 						<button
 							className="text-primary-100"
@@ -147,7 +174,7 @@ const Home: NextPage = () => {
 							}}>
 							Sign up
 						</button>
-					</div>
+					</div> */}
 				</div>
 			) : (
 				<div>
@@ -164,10 +191,8 @@ const Home: NextPage = () => {
 						error={error}
 						value={email}
 						onChange={event => {
-							if (error) {
-								setError(undefined);
-								return;
-							}
+							setError(undefined);
+
 							setEmail(event.target.value);
 						}}
 					/>
@@ -184,9 +209,7 @@ const Home: NextPage = () => {
 							value={password}
 							type={showPassword ? "text" : "password"}
 							onChange={event => {
-								if (passwordErr) {
-									setPasswordErr("");
-								}
+								setPasswordErr("");
 								setPassword(event.target.value);
 							}}
 						/>
@@ -219,7 +242,7 @@ const Home: NextPage = () => {
 							if (!isEmailValid(email) && !!email) {
 								setError(ErrorType.EMAIL);
 							}
-							if (!isValidPassword(password) && !!password) {
+							if (!schema.validate(password) && !!password) {
 								setPasswordErr(ErrorType.PASSWORD);
 							}
 							if (password && confirmPassword && password !== confirmPassword) {
@@ -231,7 +254,7 @@ const Home: NextPage = () => {
 
 					<Spacer className="h-6" />
 
-					<div className="font-sans text-neutral-900 text-sm text-center">
+					{/* <div className="font-sans text-neutral-900 text-sm text-center">
 						Already have an account?{" "}
 						<button
 							className="text-primary-100"
@@ -242,7 +265,7 @@ const Home: NextPage = () => {
 							}}>
 							Sign In
 						</button>
-					</div>
+					</div> */}
 				</div>
 			)}
 		</AuthLayoutCard>
@@ -250,3 +273,5 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps = checkAuthStatus(false);

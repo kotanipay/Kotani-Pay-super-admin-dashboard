@@ -15,6 +15,9 @@ import { Button } from "../../components/button";
 import { CustAreaChart } from "../../components/charts";
 import Dropdown from "../../components/dropdown";
 import { DateFilter } from "../../components/filter/date-filter";
+import { checkAuthStatus } from "../../utils/check-auth";
+import { useQuery } from "@tanstack/react-query";
+import { fetchData } from "../../utils/api";
 
 export const OverviewDetail: React.FC<{
 	icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -157,3 +160,5 @@ const Index = () => {
 };
 
 export default Index;
+
+export const getServerSideProps = checkAuthStatus(true);
