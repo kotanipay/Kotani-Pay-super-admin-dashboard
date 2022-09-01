@@ -4,8 +4,8 @@ import { TableHead } from "./transaction-row";
 import { UserTableRow } from "./user-table-row";
 
 export const UserTable: React.FC<{
-	users: UserDetails[];
-	isLoading: boolean;
+	users?: UserDetails[];
+	isLoading?: boolean;
 }> = ({ users, isLoading }) => {
 	return isLoading ? (
 		<Loader />
