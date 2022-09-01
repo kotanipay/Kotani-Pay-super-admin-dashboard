@@ -1,12 +1,24 @@
+import { useQuery } from "@tanstack/react-query";
+import { da } from "date-fns/locale";
 import React, { useState } from "react";
 import { Input } from "../../components/input";
 import { Layout } from "../../components/layout";
 import { Select } from "../../components/select";
 import { TransactionTable } from "../../components/transaction-table";
+import { fetchData } from "../../utils/api";
 import { checkAuthStatus } from "../../utils/check-auth";
 import { Spacer } from "../../utils/spacer";
 
 const Transactions = () => {
+	const { data } = useQuery(
+		["transactions"],
+		async () => fetchData(`/api/get-transactions`),
+		{
+			refetchOnMount: false,
+			staleTime: 1000 * 60 * 60 * 24,
+		}
+	);
+
 	return (
 		<>
 			<Layout>

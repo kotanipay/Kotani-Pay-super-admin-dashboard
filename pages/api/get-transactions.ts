@@ -16,7 +16,6 @@ export default withSessionRoute(async function getTransactions(req, res) {
 	} catch (error: any) {
 		const resError = error.response.data;
 
-		console.log();
 		res.status(resError.statusCode || 500).send(resError);
 	}
 });

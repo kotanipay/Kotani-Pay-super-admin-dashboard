@@ -1,8 +1,15 @@
-import { TableHead, TransactionRow } from "./transaction-row";
+import { UserDetails } from "../utils/types";
+import { Loader } from "./loader";
+import { TableHead } from "./transaction-row";
 import { UserTableRow } from "./user-table-row";
 
-export const UserTable = () => {
-	return (
+export const UserTable: React.FC<{
+	users: UserDetails[];
+	isLoading: boolean;
+}> = ({ users, isLoading }) => {
+	return isLoading ? (
+		<Loader />
+	) : (
 		<table className="w-full">
 			<thead className="text-left">
 				<tr className="text-left">
@@ -16,12 +23,11 @@ export const UserTable = () => {
 					/>
 				</tr>
 			</thead>
+
 			<tbody className="text-left">
-				{Array(6)
-					.fill(null)
-					.map((row, idx) => {
-						return <UserTableRow key={idx} />;
-					})}
+				{users?.map((user, idx) => {
+					return <UserTableRow user={user} key={idx} />;
+				})}
 			</tbody>
 		</table>
 	);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../../../components/input";
 import { Layout } from "../../../components/layout";
 import { Select } from "../../../components/select";
@@ -9,9 +9,37 @@ import { DownloadModal } from "../../../components/modals/download-modal";
 import { DateFilter } from "../../../components/filter/date-filter";
 import { options } from "../../../components/transaction-table";
 import { checkAuthStatus } from "../../../utils/check-auth";
+import { useQuery } from "@tanstack/react-query";
+import { fetchData } from "../../../utils/api";
+import { UserDetails } from "../../../utils/types";
 
 const Users = () => {
+	const [userSearch, setUserSearch] = useState("");
+	const [allUsers, setAllUsers] = useState<UserDetails[]>([]);
 	const [openDownload, setOpenDownload] = useState(false);
+	const [filteredUsers, setFilterUsers] = useState<UserDetails[]>([]);
+
+	const { data, isLoading: isFetchingAllUsers } = useQuery(
+		["all-users"],
+		async () => fetchData(`/api/get-users`),
+		{
+			refetchOnMount: false,
+			staleTime: 1000 * 60 * 60 * 24,
+		}
+	);
+
+	useEffect(() => {
+		setFilterUsers(
+			allUsers.filter(users =>
+				users?.name?.toLowerCase()?.match(userSearch?.toLowerCase())
+			)
+		);
+	}, [userSearch]);
+
+	useEffect(() => {
+		setAllUsers(data?.users);
+	}, [data]);
+
 	return (
 		<>
 			<DownloadModal open={openDownload} setOpen={setOpenDownload} />
@@ -58,16 +86,12 @@ const Users = () => {
 					<Spacer className="h-8" />
 
 					<div className="flex flex-col bg-white border border-neutral-200 rounded-lg py-8 px-20">
-						<Input type="search" placeholder="search transaction" />
-
-						<Spacer className="h-8" />
-
 						<div className="flex items-center justify-between w-full">
-							<div className="w-1/4">
-								<Select
-									options={options}
-									className="bg-[#F6F7F8] py-[4px]"
-									listBoxStyle=""
+							<div className="w-1/2">
+								<Input
+									type="search"
+									placeholder="search users"
+									onChange={e => setUserSearch(e.target.value)}
 								/>
 							</div>
 
@@ -86,7 +110,11 @@ const Users = () => {
 						</div>
 
 						<Spacer className="h-8" />
-						<UserTable />
+
+						<UserTable
+							isLoading={isFetchingAllUsers}
+							users={userSearch ? filteredUsers : allUsers}
+						/>
 					</div>
 				</div>
 			</Layout>

@@ -8,7 +8,6 @@ import { useState } from "react";
 import { Button } from "../components/button";
 import { AuthLayoutCard } from "../components/auth-layout-card";
 import PasswordValidator from "password-validator";
-import axios from "axios";
 import { useApi } from "../utils/api";
 import { useRouter } from "next/router";
 import { checkAuthStatus } from "../utils/check-auth";

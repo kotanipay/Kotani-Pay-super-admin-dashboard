@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import testProfile from "../public/images/test-profile.jpg";
+import testProfile from "../public/images/profile.png";
 import CaretDown from "../public/svgs/caret-filled.svg";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
@@ -9,6 +9,7 @@ import Logout from "../public/svgs/log-out.svg";
 import Settings from "../public/svgs/settings.svg";
 import { useApi } from "../utils/api";
 import { useRouter } from "next/router";
+import { UserDetails } from "../utils/types";
 
 export const UserProfile = () => {
 	const router = useRouter();
@@ -88,27 +89,7 @@ export const UserProfile = () => {
 	);
 };
 
-// export const UserProfile = () => {
-// 	return (
-// 		<div className="flex items-center space-x-3">
-// 			<div className="rounded-full flex items-center justify-center bg-[#C4C4C4]] overflow-hidden w-[49px] h-[49px]">
-// 				<Image
-// 					className="flex rounded-full items-center justify-center"
-// 					src={testProfile}
-// 					width={45}
-// 					height={45}
-// 					alt=""
-// 				/>
-// 			</div>
-// 			<div className="flex flex-col text-left">
-// 				<p className="font-sans font-semibold">Muhammed Shaik</p>
-// 				<p className="font-sans text-xs">admin@kotanipay.com</p>
-// 			</div>
-// 		</div>
-// 	);
-// };
-
-export const RecentUser = () => {
+export const RecentUser: React.FC<{ user: UserDetails }> = ({ user }) => {
 	return (
 		<div className="flex items-center space-x-3">
 			<div className="rounded-full flex items-center justify-center bg-[#C4C4C4]] overflow-hidden w-[49px] h-[49px]">
@@ -121,7 +102,7 @@ export const RecentUser = () => {
 				/>
 			</div>
 
-			<p className="font-sans font-semibold">Princess Oviawe</p>
+			<p className="font-sans font-semibold">{user?.name}</p>
 		</div>
 	);
 };

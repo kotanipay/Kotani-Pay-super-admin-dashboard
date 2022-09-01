@@ -36,7 +36,7 @@ const data1 = [
 	},
 ];
 
-const data = [
+const chartData = [
 	{
 		name: "Jan",
 		uv: 900,
@@ -80,14 +80,24 @@ const colorText = (value: string, style: any) => {
 	return <span style={style}>{value}</span>;
 };
 
-export const CustAreaChart: React.FC<{ width?: number; height?: number }> = ({
-	width = 740,
-	height = 380,
-}) => {
+export const CustAreaChart: React.FC<{
+	width?: number;
+	height?: number;
+	data?: any;
+}> = ({ width = 740, height = 380, data }) => {
+	const userData = data?.map((data: any) => {
+		return {
+			name: "Jan",
+			uv: data.numberOfUsers,
+			pv: data._id,
+			// amt: 200,
+		};
+	});
+
 	return (
 		<ResponsiveContainer width={width} height={height}>
 			<AreaChart
-				data={data}
+				data={userData ? userData : chartData}
 				margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
 				<defs>
 					<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -118,7 +128,7 @@ export const CustBarChart: React.FC<{
 }> = ({ hideLegend, width = 650, height = 290 }) => {
 	return (
 		<ResponsiveContainer width={width} height={height}>
-			<BarChart data={data}>
+			<BarChart data={chartData}>
 				<CartesianGrid strokeDasharray="0 0" strokeWidth={0.25} />
 				<XAxis dataKey="name" axisLine={false} tickLine={false} />
 				<YAxis axisLine={false} tickLine={false} />

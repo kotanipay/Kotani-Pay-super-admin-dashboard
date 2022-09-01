@@ -18,6 +18,8 @@ import { DateFilter } from "../../components/filter/date-filter";
 import { checkAuthStatus } from "../../utils/check-auth";
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "../../utils/api";
+import { UserDetails } from "../../utils/types";
+import { useRouter } from "next/router";
 
 export const OverviewDetail: React.FC<{
 	icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -39,6 +41,18 @@ export const OverviewDetail: React.FC<{
 };
 
 const Index = () => {
+	const router = useRouter();
+	const { data, isLoading: isFetchingRecentUsers } = useQuery(
+		["recent-users"],
+		async () => fetchData(`/api/recent-users`),
+		{
+			refetchOnMount: false,
+			staleTime: 1000 * 60 * 60 * 24,
+		}
+	);
+
+	const recentUsers: UserDetails[] = data?.users;
+
 	return (
 		<Layout>
 			<div className="py-14 pl-8">
@@ -142,13 +156,20 @@ const Index = () => {
 						<div className="flex flex-col space-y-6 px-5 py-6 bg-white rounded-lg w-full border border-neutral-200">
 							<p className="text-left font-sans font-semibold">Recent Users</p>
 
-							<RecentUser />
-							<RecentUser />
-							<RecentUser />
-							<RecentUser />
-							<RecentUser />
+							{isFetchingRecentUsers ? (
+								<div className=" inline-flex  items-center justify-center">
+									<div className=" h-4 w-4 rounded-full border-2 border-t-white border-r-white border-primary-200 animate-spin mr-3"></div>
+									<p className="font-sans text-primary-200"> Loading ...</p>
+								</div>
+							) : (
+								recentUsers?.map(user => {
+									return <RecentUser key={user._id} user={user} />;
+								})
+							)}
 
-							<button className="text-primary-100 text-center font-sans text-sm">
+							<button
+								onClick={() => router.push("/dashboard/users")}
+								className="text-primary-100 text-center font-sans text-sm">
 								See all users
 							</button>
 						</div>

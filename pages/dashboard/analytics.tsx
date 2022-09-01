@@ -11,6 +11,8 @@ import Verified from "../../public/svgs/verified.svg";
 import Unverified from "../../public/svgs/unverified.svg";
 import Total from "../../public/svgs/total.svg";
 import { checkAuthStatus } from "../../utils/check-auth";
+import { useQuery } from "@tanstack/react-query";
+import { fetchData } from "../../utils/api";
 
 export const UserCard = () => {
 	return (
@@ -70,6 +72,15 @@ export const UserCard = () => {
 };
 
 const Analytics = () => {
+	const { data } = useQuery(
+		["user-analytics"],
+		async () => fetchData(`/api/user-analytics`),
+		{
+			refetchOnMount: false,
+			staleTime: 1000 * 60 * 60 * 24,
+		}
+	);
+
 	return (
 		<Layout>
 			<div className="px-10 py-16">
@@ -86,7 +97,7 @@ const Analytics = () => {
 
 						<Spacer className="h-10" />
 
-						<CustAreaChart width={600} height={300} />
+						<CustAreaChart width={600} height={300} data={data?.usersData} />
 					</div>
 
 					<div className="w-[35%]">
