@@ -69,9 +69,6 @@ export const TransactionRow = () => {
 						4 hours ago
 					</p>
 				</td>
-				<td className="text-left">
-					<p className="font-sans text-sm">0523457590</p>
-				</td>
 
 				<td className="text-center">
 					<button

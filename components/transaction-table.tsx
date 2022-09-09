@@ -90,7 +90,6 @@ export const TransactionTable: React.FC<{
 							<TableHead title="Amount ($)" position="pl-2" />
 							<TableHead title="Tx hash" />
 							<TableHead title="Date" />
-							<TableHead title="Phone number" position="text-left" />
 							<TableHead
 								title="Status"
 								position="text-left bg-white w-[15%] pr-2"

@@ -8,6 +8,9 @@ import Image from "next/image";
 import { TransactionTable } from "../../../components/transaction-table";
 import { EditProfile } from "../../../components/modals/edit-profile";
 import { checkAuthStatus } from "../../../utils/check-auth";
+import { useQuery } from "@tanstack/react-query";
+import { fetchData } from "../../../utils/api";
+import { useRouter } from "next/router";
 
 export const Detail: React.FC<{ title: string; value: string }> = ({
 	title,
@@ -24,6 +27,19 @@ export const Detail: React.FC<{ title: string; value: string }> = ({
 const UserDetails = () => {
 	const [openEdit, setOpenEdit] = useState(false);
 	const [verUser, setVerUser] = useState(false);
+	const router = useRouter();
+
+	const { data, isLoading: isFetchingAllUsers } = useQuery(
+		["all-users"],
+		async () =>
+			fetchData(`/api/get-user-details/${router.query["user-details"]}`),
+		{
+			refetchOnMount: false,
+			staleTime: 1000 * 60 * 60 * 24,
+		}
+	);
+
+	console.log(data);
 
 	return (
 		<>

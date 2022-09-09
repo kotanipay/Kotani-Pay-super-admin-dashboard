@@ -89,37 +89,23 @@ const Index = () => {
 						<div className="flex items-center justify-between w-full">
 							<p className="font-sans text-lg">Overview</p>
 
-							<button className="text-primary-100 text-xs mr-6">
+							{/* <button className="text-primary-100 text-xs mr-6">
 								See all balances
-							</button>
+							</button> */}
 						</div>
 
 						<Spacer className="h-6" />
 
-						<div className="flex items-center justify-between w-full rounded-lg border bg-white border-neutral-200 py-5 px-4">
-							<OverviewDetail icon={Btc} name="Balance" amount="$ 300,000.00" />
-
-							<div className="h-12 w-[1px] bg-[#C5C5C6]"></div>
+						<div className="flex items-center space-x-10 justify-center w-full rounded-lg border bg-white border-neutral-200 py-5 px-4">
 							<OverviewDetail
 								icon={CUSD}
 								name="cUSD transacted"
 								amount="400,000.00"
 							/>
+
 							<div className="h-12 w-[1px] bg-[#C5C5C6]"></div>
 
 							<OverviewDetail icon={User} name="Users" amount="500,000.00" />
-
-							<div className="h-12 w-[1px] bg-[#C5C5C6]"></div>
-
-							<OverviewDetail
-								icon={Wallet}
-								name="Wallets"
-								amount="600,000.00"
-							/>
-
-							<div className="h-12 w-[1px] bg-[#C5C5C6]"></div>
-
-							<OverviewDetail icon={Jenga} name="Jenga" amount="600,000.00" />
 						</div>
 
 						<Spacer className="h-8" />

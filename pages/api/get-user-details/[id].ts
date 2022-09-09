@@ -1,12 +1,13 @@
 import axios from "axios";
-import { withSessionRoute } from "../../lib/withSession";
+import { withSessionRoute } from "../../../lib/withSession";
 
-export default withSessionRoute(async function getUsers(req, res) {
+export default withSessionRoute(async function getUserDetails(req, res) {
 	const url = process.env.NEXT_PUBLIC_API_URL;
 	const token = req.session.user?.accessToken;
+	const id = req.query.id;
 
 	try {
-		const response = await axios.get(`${url}/all-user-details`, {
+		const response = await axios.get(`${url}/user/${id}`, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},

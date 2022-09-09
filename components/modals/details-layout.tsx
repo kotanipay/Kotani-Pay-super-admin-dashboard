@@ -13,7 +13,7 @@ export const DetialsLayout: React.FC<{
 			<Transition appear show={open} as={Fragment}>
 				<Dialog
 					as="div"
-					className={`fixed z-40 top-0  right-0 ${modalWidth}`}
+					className={`fixed z-50 top-0  right-0 ${modalWidth}`}
 					onClose={() => close?.()}>
 					<div className="min-h-screen">
 						<Transition.Child
