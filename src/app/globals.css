@@ -1,0 +1,189 @@
+@fontface {
+  font-family: 'Nunito Sans', cursive;
+  src: url('https://fonts.googleapis.com/css?family=Nunito+Sans:100,200,300,400,500,600,700,800,900&display=swap')
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.react-calendar {
+  border: none !important;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  text-decoration: none !important;
+}
+
+.react-calendar__tile--active {
+  background-color: #1a202c !important;
+  color: #fff !important;
+  border-radius: 0.5rem;
+}
+
+
+/* modal */
+.modal {
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  z-index: 1050;
+  /* width: 100%;
+  height: 100%; */
+  overflow: hidden;
+  outline: 0;
+}
+
+.modal-lg {
+  width: 30vw !important;
+}
+
+/* tablets */
+@media (max-width: 1024px) {
+  .modal {
+    position: fixed;
+    width: 100vw !important;
+  }
+
+  .modal-lg {
+    margin-left: 2.5vw;
+    width: 95vw !important;
+  }
+}
+
+
+
+.modal .fade {
+  perspective: 1300;
+}
+
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.fade {
+  transition: opacity .15s linear;
+}
+
+.modal.show .modalFall.modal-dialog {
+  transform: translateZ(0) rotateX(0deg);
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.modal.show .modal3DFlipHorizontal.modal-dialog,
+.modal.show .modal3DFlipVertical.modal-dialog,
+.modal.show .modalFadeInScale.modal-dialog,
+.modal.show .modalFall.modal-dialog,
+.modal.show .modalRapid.modal-dialog,
+.modal.show .modalSlideIn.modal-dialog {
+  opacity: 1;
+}
+
+.modal.fade .modal3DFlipHorizontal.modal-dialog,
+.modal.fade .modal3DFlipVertical.modal-dialog,
+.modal.fade .modalFadeInScale.modal-dialog,
+.modal.fade .modalFall.modal-dialog,
+.modal.fade .modalRapid.modal-dialog,
+.modal.fade .modalSlideIn.modal-dialog {
+  transition: .3s;
+}
+
+.modal .modalFall.modal-dialog {
+  transform-style: preserve-3d;
+  transform: translateZ(600px) rotateX(20deg);
+}
+
+.modal.show .modal-dialog {
+  transform: none;
+}
+
+.modal.fade .modal-dialog {
+  transition: transform .3s ease-out;
+  transform: translateY(-50px);
+}
+
+.modal .modal-dialog {
+  margin-top: 8rem;
+}
+
+@media (min-width: 992px) {
+  .modal-lg {
+    max-width: 800px !important;
+  }
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 500px;
+    margin: 1.75rem auto !important;
+  }
+
+  .modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 0.5rem;
+    pointer-events: none;
+  }
+}
+
+.modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 0.24rem;
+  outline: 0;
+}
+
+.modal-backdrop.show {
+  opacity: .7;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+}
+
+@keyframes modal-show {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
