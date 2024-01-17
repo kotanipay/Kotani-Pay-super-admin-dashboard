@@ -1,4 +1,5 @@
 "use client";
+import Loader from "@/components/common/loader";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -25,5 +26,5 @@ export const DecisionPage = () => {
   //       }
   //     }
   //   }, [store.user, store.state]);
-  return <></>;
+  return <Loader />;
 };

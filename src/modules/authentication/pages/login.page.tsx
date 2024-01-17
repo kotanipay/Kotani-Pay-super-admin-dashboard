@@ -18,7 +18,7 @@ export const LoginPage = () => {
     <AuthLayout>
       <div className="h-full flex flex-col items-center justify-center">
         <Image src={"/images/logo.png"} alt="logo" width={250} height={200} />
-        <form className="bg-white dark:bg-black-700 flex flex-col items-center lg:w-[30vw] w-full rounded-2xl px-7 py-14 shadow-2xl border dark:border-gray-600 border-gray-300">
+        <form className="bg-white dark:bg-black-700 flex flex-col items-center lg:max-w-[35vw] lg:w-[35vw] w-full rounded-2xl px-7 py-14 shadow-2xl border dark:border-gray-600 border-gray-300">
           <h4 className="text-xl text-black dark:text-white mb-16 font-semibold">
             Admin Sign In
           </h4>
