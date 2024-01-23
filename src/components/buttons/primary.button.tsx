@@ -12,7 +12,7 @@ const PrimaryButton = ({
   return (
     <button
       {...props}
-      className={`bg-kotani-blue text-white hover:bg-kotani-orange dark:bg-kotani-lightblue  hover:bg-kotani-yellow text-white px-7 py-3 rounded-lg font-semibold ${buttonStyle}`}
+      className={` ${buttonStyle}  px-7 py-3  bg-kotani-blue text-white hover:bg-kotani-orange dark:bg-kotani-lightblue  hover:bg-kotani-yellow hover:text-black text-white rounded-lg font-semibold`}
       onClick={onClick}
     >
       {children}
