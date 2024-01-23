@@ -19,7 +19,7 @@ export interface TransactionModel {
   phoneNumber: string;
   status: string;
 }
-const mockTransactions: TransactionModel[] = [
+export const mockTransactions: TransactionModel[] = [
   {
     amount: 1000,
     txHash: "0x123456789087654321",

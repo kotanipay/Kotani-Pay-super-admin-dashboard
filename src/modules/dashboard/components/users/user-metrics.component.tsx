@@ -1,7 +1,6 @@
 "use client";
 
 import UserMetricsCard from "./user-metric-card.component";
-import { useState } from "react";
 
 const UserMetricsCardGroup = () => {
 

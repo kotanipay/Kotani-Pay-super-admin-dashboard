@@ -1,7 +1,7 @@
-import { DashboardAnalyticsPage } from "@/modules/dashboard/pages/dashboard-analytics.page";
+import { DashboardTransactionsPage } from "@/modules/dashboard/pages/dashboard-transaction.page";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Transactions",
 };
-export default DashboardAnalyticsPage;
+export default DashboardTransactionsPage;
